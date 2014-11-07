@@ -145,7 +145,7 @@ public class ControlPanel extends JPanel {
 
         // начальные значения координат точек
         private double[] xValues = {-150, -150, -150, -150, -50, -50, -50, -50, 50, 50, 50, 50, 150, 150, 150, 150};
-        private double[] yValues = {0, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 0};
+        private double[] yValues = {0, 50, 50, 0, 50, -300, 50, 50, 50, 50, 300, 50, 0, 50, 50, 0};
         private double[] zValues = {150, 50, -50, -150, 150, 50, -50, -150, 150, 50, -50, -150, 150, 50, -50, -150};
 
         private List<JTextField> pointXFields;
