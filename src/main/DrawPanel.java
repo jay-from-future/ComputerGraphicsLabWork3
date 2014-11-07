@@ -19,6 +19,7 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
 
     private final static int AXIS_LENGTH = 350;
     private final static int POINT_SIZE = 6;
+    private final static int POLYHEDRON_SIZE = 4;
 
     private int width;
     private int height;
@@ -29,12 +30,13 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
     private Matrix rotationMatrix;
 
     private List<Point3D> basePoints; // базисные точки
-    private List<Point3D> curvePoints; // точки кривой Безье
+    private List<List<Point3D>> curveLines; // список кривых Безье
 
     private boolean isBaseLineVisible = true;
-    private boolean isCurvePointMarked = false;
+    private boolean isCurvePointMarked = true;
 
     public DrawPanel(int width, int height) {
+        setPreferredSize(new Dimension(width, height));
         addMouseListener(new DrawPanelMouseListener(this, width, height));
         this.width = width;
         this.height = height;
@@ -52,7 +54,7 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
         // смещение цетра координатных осей на центр панели
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform offsetToCenter = new AffineTransform();
-        offsetToCenter.translate(width / 2, (height - 100) / 2);
+        offsetToCenter.translate(width / 2, height / 2);
         g2d.transform(offsetToCenter);
 
         // рисуем координатные оси
@@ -62,125 +64,72 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
         Point3D zAxis = new Point3D(0, 0, AXIS_LENGTH);
         drawAxes(g, zeroPoint, xAxis, yAxis, zAxis);
 
-        // рисуем базисные точки
-//        if (isBaseLineVisible) {
-//            g.setColor(Color.BLACK);
-//            if (basePoints != null) {
-//                Point2D prevPoint = null;
-//                Point3D nextPoint3D = null;
-//                Point2D nextPoint = null;
-//                Point2D currentPoint;
-//                for (Point3D p : basePoints) {
-//                    p = new Point3D(p.getX(), -p.getY(), p.getZ());
-//                    currentPoint = RotationUtil.orthogonalProjection(RotationUtil.convert(p, rotationMatrix));
-//                    drawPointWithMark(g, currentPoint);
-//                    if (prevPoint != null) {
-//                        drawLine(g, prevPoint, currentPoint);
-//                    }
-//                    if (nextPoint != null) {
-//                        drawLine(g, nextPoint, currentPoint);
-//                    }
-//                    prevPoint = currentPoint;
-//                    nextPoint3D = basePoints.get(basePoints.indexOf(currentPoint) + 4);
-//                    nextPoint3D = new Point3D(nextPoint3D.getX(), -nextPoint3D.getY(), nextPoint3D.getZ());
-//                    nextPoint =  RotationUtil.orthogonalProjection(RotationUtil.convert(nextPoint3D, rotationMatrix));
-//                }
-//            }
-//        }
+        // расчитываем точки поверхности Безье по базисным точкам
+        if (basePoints != null) {
+            if (!basePoints.isEmpty()) {
+                curveLines = new ArrayList<List<Point3D>>(Model.plotBezierSurface(basePoints));
+            }
+        }
 
+        // рисуем точки поверхности Безье
+        g.setColor(Color.GRAY);
+        if (curveLines != null) {
+            int size = curveLines.size();
+            for (int i = 0; i < size; i++) {
+                List<Point3D> line = new ArrayList<Point3D>();
+                for (int j = 0; j < size; j++) {
+                    line.add(curveLines.get(j).get(i));
+                }
+                curveLines.add(line);
+            }
+            for (List<Point3D> line : curveLines) {
+                Point2D prevPoint = null;
+                Point2D currentPoint;
+                for (Point3D p : line) {
+                    p = new Point3D(p.getX(), -p.getY(), p.getZ());
+                    currentPoint = RotationUtil.orthogonalProjection(RotationUtil.convert(p, rotationMatrix));
+                    if (isCurvePointMarked) {
+                        drawPointWithMark(g, currentPoint);
+                    }
+                    if (prevPoint != null) {
+                        drawLine(g, prevPoint, currentPoint);
+                    }
+                    prevPoint = currentPoint;
+                }
+            }
+        }
+        // рисуем базисный многоугольник по точкам
         if (isBaseLineVisible) {
             g.setColor(Color.BLACK);
             if (basePoints != null) {
                 List<Point3D> basePointsCopy = new ArrayList<Point3D>(basePoints);
-                Point2D nearestByX;
-                Point2D nearestByY;
                 for (int i = 0; i < basePointsCopy.size(); i++) {
                     Point3D currBasePoint = basePointsCopy.get(i);
-//                    nearestByX = RotationUtil.orthogonalProjection(RotationUtil.convert(reverseByY(
-//                            findNearestByX(currBasePoint, basePointsCopy)), rotationMatrix));
-//                    nearestByY = RotationUtil.orthogonalProjection(RotationUtil.convert(reverseByY(
-//                            findNearestByY(currBasePoint, basePointsCopy)), rotationMatrix));
 
-                    currBasePoint = reverseByY(currBasePoint);
+                    currBasePoint = RotationUtil.reverseByY(currBasePoint);
                     Point2D currBasePoint2D = RotationUtil.orthogonalProjection(RotationUtil.convert(currBasePoint,
                             rotationMatrix));
                     drawPointWithMark(g, currBasePoint2D);
-                    drawString(g, currBasePoint2D, String.valueOf(i));
+                    drawString(g, new Point2D(currBasePoint2D.getX() + 10, currBasePoint2D.getY() + 10), String.valueOf(i));
 
-
-                    if (i != 3 && i != 7 && i != 11 && i != 15) {
-
-                        if (i + 1 < basePointsCopy.size()) {
-                            drawLine(g, currBasePoint2D, RotationUtil.orthogonalProjection(RotationUtil.convert(reverseByY(basePointsCopy.get(i + 1)),
-                                    rotationMatrix)));
+                    boolean isNotEndOfRow = true;
+                    for (int j = 1; j < POLYHEDRON_SIZE; j++) {
+                        if (i == (POLYHEDRON_SIZE * j - 1)) {
+                            isNotEndOfRow = false;
+                            break;
                         }
                     }
-                    if (i + 4 < basePointsCopy.size()) {
-                        drawLine(g, currBasePoint2D, RotationUtil.orthogonalProjection(RotationUtil.convert(reverseByY(basePointsCopy.get(i + 4)),
-                                rotationMatrix)));
+                    if (isNotEndOfRow && (i + 1 < basePointsCopy.size())) {
+                        drawLine(g, currBasePoint2D, RotationUtil.orthogonalProjection(
+                                RotationUtil.convert(RotationUtil.reverseByY(basePointsCopy.get(i + 1)), rotationMatrix)));
                     }
-
-//                    basePointsCopy.remove(i);
+                    if (i + 4 < basePointsCopy.size()) {
+                        drawLine(g, currBasePoint2D, RotationUtil.orthogonalProjection(RotationUtil.convert(
+                                RotationUtil.reverseByY(basePointsCopy.get(i + 4)), rotationMatrix)));
+                    }
                 }
             }
         }
-
-        // расчитываем точки кривой Безье по базисным точкам
-        if (basePoints != null) {
-            if (!basePoints.isEmpty()) {
-                curvePoints = Model.getCurvePoints(basePoints);
-            }
-        }
-
-        // рисуем точки кривой Безье
-//        g.setColor(Color.GRAY);
-//        if (curvePoints != null) {
-//            Point2D prevPoint = null;
-//            Point2D currentPoint;
-//            for (Point3D p : curvePoints) {
-//                p = new Point3D(p.getX(), -p.getY(), p.getZ());
-//                currentPoint = RotationUtil.orthogonalProjection(RotationUtil.convert(p, rotationMatrix));
-//                if (isCurvePointMarked) {
-//                    drawPointWithMark(g, currentPoint);
-//                }
-//                if (prevPoint != null) {
-//                    drawLine(g, prevPoint, currentPoint);
-//                }
-//                prevPoint = currentPoint;
-//            }
-//        }
-    }
-
-    private Point3D reverseByY(Point3D currBasePoint) {
-        return new Point3D(currBasePoint.getX(), -currBasePoint.getY(), currBasePoint.getZ());
-    }
-
-    private Point3D findNearestByY(Point3D currBasePoint, List<Point3D> basePoints) {
-        int numberOfNearest = 0;
-        double min_delta_y = Double.MAX_VALUE;
-        double delta_y;
-        for (int i = 0; i < basePoints.size(); i++) {
-            delta_y = Math.abs(currBasePoint.getY() - basePoints.get(i).getY());
-            if (delta_y < min_delta_y) {
-                min_delta_y = delta_y;
-                numberOfNearest = i;
-            }
-        }
-        return basePoints.get(numberOfNearest);
-    }
-
-    private Point3D findNearestByX(Point3D currBasePoint, List<Point3D> basePoints) {
-        int numberOfNearest = 0;
-        double min_delta_x = Double.MAX_VALUE;
-        double delta_x;
-        for (int i = 0; i < basePoints.size(); i++) {
-            delta_x = Math.abs(currBasePoint.getX() - basePoints.get(i).getX());
-            if (delta_x < min_delta_x) {
-                min_delta_x = delta_x;
-                numberOfNearest = i;
-            }
-        }
-        return basePoints.get(numberOfNearest);
     }
 
     @Override

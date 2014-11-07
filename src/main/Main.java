@@ -4,9 +4,8 @@ import javax.swing.*;
 
 public class Main {
 
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 700;
-    private static final int POINT_COUNT = 10;
+    private static final int WIDTH = 900;
+    private static final int HEIGHT = 600;
 
     public static void main(String[] args) {
         DrawPanel drawPanel = new DrawPanel(WIDTH, HEIGHT);

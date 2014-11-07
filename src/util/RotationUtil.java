@@ -8,6 +8,10 @@ public class RotationUtil {
     private final static double ALPHA = 35.264;
     private final static double BETA = 45;
 
+    public static Point3D reverseByY(Point3D currBasePoint) {
+        return new Point3D(currBasePoint.getX(), -currBasePoint.getY(), currBasePoint.getZ());
+    }
+
     public static Matrix getBaseRotation() {
         double[][] matrixAlpha = {
                 {1, 0, 0},

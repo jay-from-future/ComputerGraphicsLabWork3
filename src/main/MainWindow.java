@@ -15,7 +15,7 @@ public class MainWindow extends JFrame {
         setLayout(new BorderLayout());
         add(drawPanel, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.SOUTH);
-
+        pack();
         setVisible(true);
     }
 }
