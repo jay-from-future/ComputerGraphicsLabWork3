@@ -1,4 +1,4 @@
-package interfaces;
+package xyz.jayfromfuture.interfaces;
 
 public interface RotateListener {
     void xRotate(double alpha);

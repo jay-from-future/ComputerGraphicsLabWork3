@@ -1,11 +1,11 @@
-package main;
+package xyz.jayfromfuture;
 
 import Jama.Matrix;
-import interfaces.ControlPanelListener;
-import interfaces.RotateListener;
-import util.Point2D;
-import util.Point3D;
-import util.RotationUtil;
+import xyz.jayfromfuture.interfaces.ControlPanelListener;
+import xyz.jayfromfuture.interfaces.RotateListener;
+import xyz.jayfromfuture.util.Point2D;
+import xyz.jayfromfuture.util.Point3D;
+import xyz.jayfromfuture.util.RotationUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,13 +21,11 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
     private final static int POINT_SIZE = 6;
     private final static int POLYHEDRON_SIZE = 4;
 
-    private int width;
-    private int height;
-
+    private final int width;
+    private final int height;
+    private final Matrix defaultRotationMatrix;
     private double alpha = 0;
     private double beta = 0;
-
-    private Matrix defaultRotationMatrix;
     private Matrix rotationMatrix;
 
     private List<Point3D> basePoints; // базисные точки
@@ -43,7 +41,7 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
         this.height = height;
         updateRotationMatrix();
         defaultRotationMatrix = rotationMatrix;
-        basePoints = new ArrayList<Point3D>();
+        basePoints = new ArrayList<>();
     }
 
     @Override
@@ -56,7 +54,7 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
         // смещение цетра координатных осей на центр панели
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform offsetToCenter = new AffineTransform();
-        offsetToCenter.translate(width / 2, height / 2);
+        offsetToCenter.translate(width / 2.0, height / 2.0);
         g2d.transform(offsetToCenter);
 
         // рисуем координатные оси
@@ -66,11 +64,10 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
         Point3D zAxis = new Point3D(0, 0, AXIS_LENGTH);
         drawAxes(g, zeroPoint, xAxis, yAxis, zAxis);
 
-
         // расчитываем точки поверхности Безье по базисным точкам
         if (basePoints != null) {
             if (!basePoints.isEmpty()) {
-                curveLines = new ArrayList<List<Point3D>>(Model.plotBezierSurface(basePoints));
+                curveLines = new ArrayList<>(Model.plotBezierSurface(basePoints));
             }
         }
 
@@ -79,9 +76,9 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
         if (curveLines != null) {
             int size = curveLines.size();
             for (int i = 0; i < size; i++) {
-                List<Point3D> line = new ArrayList<Point3D>();
-                for (int j = 0; j < size; j++) {
-                    line.add(curveLines.get(j).get(i));
+                List<Point3D> line = new ArrayList<>();
+                for (List<Point3D> curveLine : curveLines) {
+                    line.add(curveLine.get(i));
                 }
                 curveLines.add(line);
             }
@@ -105,7 +102,7 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
         if (isBaseLineVisible) {
             g.setColor(Color.BLACK);
             if (basePoints != null) {
-                List<Point3D> basePointsCopy = new ArrayList<Point3D>(basePoints);
+                List<Point3D> basePointsCopy = new ArrayList<>(basePoints);
                 for (int i = 0; i < basePointsCopy.size(); i++) {
                     Point3D currBasePoint = basePointsCopy.get(i);
 
@@ -240,10 +237,10 @@ public class DrawPanel extends JPanel implements RotateListener, ControlPanelLis
 
 class DrawPanelMouseListener extends MouseAdapter {
 
-    private RotateListener rotateListener;
+    private final RotateListener rotateListener;
 
-    private int maxX;
-    private int maxY;
+    private final int maxX;
+    private final int maxY;
 
     private int startX;
     private int startY;

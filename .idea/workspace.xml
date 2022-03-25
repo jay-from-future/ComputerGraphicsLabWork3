@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6ae0ab1d-8e08-4a1c-afc3-fec98498315c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__gov_nist_math_jama_1_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ComputerGraphicsLabWork3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ComputerGraphicsLabWork3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Jama-1.0.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/ControlPanelListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/interfaces/ControlPanelListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/RotateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/interfaces/RotateListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/ControlPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/ControlPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/DrawPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/DrawPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Point2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/util/Point2D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Point3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/util/Point3D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/RotationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture/util/RotationUtil.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="26qLFPmFarUrHgMH6iAvrCLD2MJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/xyz/jayfromfuture" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main (1)">
+    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="xyz.jayfromfuture.Main" />
+      <module name="ComputerGraphicsLabWork3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="xyz.jayfromfuture.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Main" />
+      <module name="ComputerGraphicsLabWork3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main (1)" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6ae0ab1d-8e08-4a1c-afc3-fec98498315c" name="Changes" comment="" />
+      <created>1648146065920</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648146065920</updated>
+      <workItem from="1648146067545" duration="1424000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -1,6 +1,4 @@
-package main;
-
-import javax.swing.*;
+package xyz.jayfromfuture;
 
 public class Main {
 

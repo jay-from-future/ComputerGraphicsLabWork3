@@ -1,4 +1,4 @@
-package main;
+package xyz.jayfromfuture;
 
 import javax.swing.*;
 import java.awt.*;

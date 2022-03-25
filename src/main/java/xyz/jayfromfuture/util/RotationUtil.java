@@ -1,4 +1,4 @@
-package util;
+package xyz.jayfromfuture.util;
 
 import Jama.Matrix;
 
@@ -59,18 +59,5 @@ public class RotationUtil {
 
     public static Point2D orthogonalProjection(Point3D point3D) {
         return new Point2D(point3D.getX(), point3D.getY());
-    }
-
-    public static String matrixToString(Matrix matrix) {
-        StringBuilder result = new StringBuilder();
-        double[][] m = matrix.getArray();
-        for (int r = 0; r < matrix.getRowDimension(); r++) {
-            for (int c = 0; c < matrix.getColumnDimension(); c++) {
-                result.append(m[r][c]);
-                result.append(" ");
-            }
-            result.append(System.lineSeparator());
-        }
-        return result.toString();
     }
 }

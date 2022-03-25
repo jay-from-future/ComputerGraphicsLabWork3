@@ -1,7 +1,7 @@
-package main;
+package xyz.jayfromfuture;
 
 import Jama.Matrix;
-import util.Point3D;
+import xyz.jayfromfuture.util.Point3D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,42 +18,9 @@ public class Model {
             {1, 0, 0, 0}
     };
 
-    public static List<Point3D> getCurvePoints(List<Point3D> basePoints) {
-        List<Point3D> curvePoints = new ArrayList<Point3D>();
-        int i = 0;
-        do {
-            curvePoints.addAll(getCurvePoints(basePoints.get(i), basePoints.get(i + 1), basePoints.get(i + 2),
-                    basePoints.get(i + 3)));
-            i += 3;
-        } while (i < (basePoints.size() - 1));
-        return curvePoints;
-    }
-
-    public static List<Point3D> getCurvePoints(Point3D p0, Point3D p1, Point3D p2, Point3D p3) {
-        List<Point3D> curvePoints = new ArrayList<Point3D>();
-        double[][] t_matrix = new double[1][4];
-        // заполням матрицу точек p
-        double[][] p_matrix = {
-                {p0.getX(), p0.getY(), p0.getZ()},
-                {p1.getX(), p1.getY(), p1.getZ()},
-                {p2.getX(), p2.getY(), p2.getZ()},
-                {p3.getX(), p3.getY(), p3.getZ()}
-        };
-        for (double t = 0; t <= 1.0; t += T_STEP) {
-            // заполняем матрицу t (строка)
-            for (int i = 0; i <= 3; i++) {
-                t_matrix[0][i] = Math.pow(t, 3 - i);
-            }
-            double[][] b_point_matrix = (new Matrix(t_matrix).times(new Matrix(basisMatrix))).
-                    times(new Matrix(p_matrix)).getArray();
-            curvePoints.add(new Point3D(b_point_matrix[0][0], b_point_matrix[0][1], b_point_matrix[0][2]));
-        }
-        return curvePoints;
-    }
-
     public static List<List<Point3D>> plotBezierSurface(final List<Point3D> basePoints) {
 
-        /**
+        /*
          * Расположение точек:
          *
          * 0 1 2 3
@@ -82,14 +49,14 @@ public class Model {
         double[][] t_matrix = new double[1][4];
         double[][] w_matrix = new double[4][1];
 
-        List<List<Point3D>> linesOfSurface = new ArrayList<List<Point3D>>();
+        List<List<Point3D>> linesOfSurface = new ArrayList<>();
 
         for (double t = 0; t <= 1.0; t += T_STEP) {
             // заполняем матрицу t (строка)
             for (int i = 0; i <= 3; i++) {
                 t_matrix[0][i] = Math.pow(t, 3 - i);
             }
-            List<Point3D> currLine = new ArrayList<Point3D>();
+            List<Point3D> currLine = new ArrayList<>();
             Matrix t_jama_matrix = new Matrix(t_matrix);
             for (double w = 0; w <= 1.0; w += W_STEP) {
                 // заполняем матрицу w (столбец)
@@ -107,9 +74,5 @@ public class Model {
             linesOfSurface.add(currLine);
         }
         return linesOfSurface;
-    }
-
-    private static Point3D pointToNumber(Point3D point3D, double v) {
-        return new Point3D(point3D.getX() * v, point3D.getY() * v, point3D.getZ() * v);
     }
 }

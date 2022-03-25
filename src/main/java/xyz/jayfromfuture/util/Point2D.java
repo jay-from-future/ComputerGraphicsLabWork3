@@ -1,4 +1,4 @@
-package util;
+package xyz.jayfromfuture.util;
 
 public class Point2D {
 
@@ -19,8 +19,7 @@ public class Point2D {
     }
 
     public double[] getArray() {
-        double[] array = {this.getX(), this.getY()};
-        return array;
+        return new double[]{this.getX(), this.getY()};
     }
 
     @Override

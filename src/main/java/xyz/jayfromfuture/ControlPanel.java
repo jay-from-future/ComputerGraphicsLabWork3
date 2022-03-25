@@ -1,8 +1,8 @@
-package main;
+package xyz.jayfromfuture;
 
-import interfaces.ControlPanelListener;
-import interfaces.RotateListener;
-import util.Point3D;
+import xyz.jayfromfuture.interfaces.ControlPanelListener;
+import xyz.jayfromfuture.interfaces.RotateListener;
+import xyz.jayfromfuture.util.Point3D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,16 +19,14 @@ public class ControlPanel extends JPanel {
     private static final String DEFAULT_ROTATION_STR = "Установить углы вращения по умолчанию";
     private static final String POLYHEDRON_VERTICES_STR = "Задать координаты многогранника";
 
-    private ControlPanelListener controlPanelListener;
+    private final ControlPanelListener controlPanelListener;
 
-    private JCheckBox isCurvePointMarked;
-    private JCheckBox isBaseLineVisible;
-
+    private final JCheckBox isCurvePointMarked;
+    private final JCheckBox isBaseLineVisible;
+    private final PolyhedronVertices polyhedronVerticesDialog = new PolyhedronVertices();
     private List<JTextField> pointXFields;
     private List<JTextField> pointYFields;
     private List<JTextField> pointZFields;
-
-    private PolyhedronVertices polyhedronVerticesDialog = new PolyhedronVertices();
 
     public ControlPanel(ControlPanelListener controlPanelListener) {
 
@@ -77,14 +75,14 @@ public class ControlPanel extends JPanel {
     }
 
     private void sendBasePoints() {
-        List<Point3D> basePoints = new ArrayList<Point3D>();
+        List<Point3D> basePoints = new ArrayList<>();
         double x;
         double y;
         double z;
         for (int i = 0; i < pointXFields.size(); i++) {
-            x = Double.valueOf(pointXFields.get(i).getText());
-            y = Double.valueOf(pointYFields.get(i).getText());
-            z = Double.valueOf(pointZFields.get(i).getText());
+            x = Double.parseDouble(pointXFields.get(i).getText());
+            y = Double.parseDouble(pointYFields.get(i).getText());
+            z = Double.parseDouble(pointZFields.get(i).getText());
             basePoints.add(new Point3D(x, y, z));
         }
         controlPanelListener.setBasePoints(basePoints);
@@ -92,9 +90,7 @@ public class ControlPanel extends JPanel {
 
     private boolean isPointsSets() {
         if (pointXFields != null && pointYFields != null && pointZFields != null) {
-            if (!pointXFields.isEmpty() && !pointYFields.isEmpty() && !pointZFields.isEmpty()) {
-                return true;
-            }
+            return !pointXFields.isEmpty() && !pointYFields.isEmpty() && !pointZFields.isEmpty();
         }
         return false;
     }
@@ -141,16 +137,14 @@ public class ControlPanel extends JPanel {
         private static final String SET_DEFAULT_BASE_POINTS_STR = "Вершины по умолчанию";
         private static final String SET_RANDOM_BASE_POINTS_STR = "Случайные координаты";
 
-        private PolyhedronVerticesButtonListener buttonListener;
-
         // начальные значения координат точек
-        private double[] xValues = {-150, -150, -150, -150, -50, -50, -50, -50, 50, 50, 50, 50, 150, 150, 150, 150};
-        private double[] yValues = {0, 50, 50, 0, 50, -300, 50, 50, 50, 50, 300, 50, 0, 50, 50, 0};
-        private double[] zValues = {150, 50, -50, -150, 150, 50, -50, -150, 150, 50, -50, -150, 150, 50, -50, -150};
+        private final double[] xValues = {-150, -150, -150, -150, -50, -50, -50, -50, 50, 50, 50, 50, 150, 150, 150, 150};
+        private final double[] yValues = {0, 50, 50, 0, 50, -300, 50, 50, 50, 50, 300, 50, 0, 50, 50, 0};
+        private final double[] zValues = {150, 50, -50, -150, 150, 50, -50, -150, 150, 50, -50, -150, 150, 50, -50, -150};
 
-        private List<JTextField> pointXFields;
-        private List<JTextField> pointYFields;
-        private List<JTextField> pointZFields;
+        private final List<JTextField> pointXFields;
+        private final List<JTextField> pointYFields;
+        private final List<JTextField> pointZFields;
 
         PolyhedronVertices() throws HeadlessException {
             setTitle(TITLE);
@@ -159,7 +153,7 @@ public class ControlPanel extends JPanel {
             setResizable(false);
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-            buttonListener = new PolyhedronVerticesButtonListener();
+            PolyhedronVerticesButtonListener buttonListener = new PolyhedronVerticesButtonListener();
 
             JButton setBasePointsButton = new JButton(SET_BASE_POINTS_STR);
             setBasePointsButton.addActionListener(buttonListener);
@@ -174,9 +168,9 @@ public class ControlPanel extends JPanel {
             buttonPanel.add(setRandomBasePointsButton);
 
 
-            pointXFields = new ArrayList<JTextField>();
-            pointYFields = new ArrayList<JTextField>();
-            pointZFields = new ArrayList<JTextField>();
+            pointXFields = new ArrayList<>();
+            pointYFields = new ArrayList<>();
+            pointZFields = new ArrayList<>();
 
             for (int i = 0; i < 16; i++) {
                 pointXFields.add(new JTextField(String.valueOf(xValues[i]), 6));

@@ -1,4 +1,4 @@
-package util;
+package xyz.jayfromfuture.util;
 
 public class Point3D extends Point2D {
 
